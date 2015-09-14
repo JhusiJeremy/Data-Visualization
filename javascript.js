@@ -24,7 +24,7 @@ var svg = d3.select("body").append("svg")
 var link = svg.append("g").selectAll(".link"),
     node = svg.append("g").selectAll(".node");
 
-d3.json("https://gist.githubusercontent.com/mbostock/1044242/raw/6645ceedb4a9068f679d4c60949a6f1385c98972/readme-flare-imports.json", function(error, classes) {
+d3.json("./readme-flare-imports.json", function(error, classes) {
   if (error) throw error;
 
   var nodes = cluster.nodes(packageHierarchy(classes)),
