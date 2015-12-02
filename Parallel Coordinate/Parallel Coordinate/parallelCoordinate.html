@@ -3,12 +3,12 @@
     <title>Parallel Coordinates</title>
     <link type="text/css" rel="stylesheet" href="ex.css"/>
     <script type="text/javascript" src="../protovis.min.js"></script>
-    <script type="text/javascript" src="results.js"></script>
+    <script type="text/javascript" src="results_270k.js"></script>
     <style type="text/css">
 
 #fig {
-  width: 880px;
-  height: 460px;
+  width: 1250px;
+  height: 600px;
 }
 
 #title {
@@ -42,18 +42,18 @@ var dims = pv.keys(units);
 
 /* Sizing and scales. */
 var w = 1200,
-    h = 1100,
-    fudge = 0.5,
+    h = 650,
+    fudge = 0,
     x = pv.Scale.ordinal(dims).splitFlush(0, w),
     y = pv.dict(dims, function(t) pv.Scale.linear(
         results.filter(function(d) !isNaN(d[t])),
-        function(d) Math.floor(d[t])-fudge,
-        function(d) Math.ceil(d[t]) +fudge
+        function(d) d[t]-fudge,
+        function(d) d[t] +fudge
         ).range(0, h)),
     c = pv.dict(dims, function(t) pv.Scale.linear(
         results.filter(function(d) !isNaN(d[t])),
-        function(d) Math.floor(d[t])-fudge,
-        function(d) Math.ceil(d[t]) +fudge
+        function(d) d[t]-fudge,
+        function(d) d[t] +fudge
         ).range("steelblue", "brown"));
 
 /* Interaction state. */
@@ -96,6 +96,9 @@ rule.anchor("top").add(pv.Label)
 
 // The parallel coordinates display.
 var change = vis.add(pv.Panel);
+
+console.log("Packets: ");
+console.log(results.length);
 
 var line = change.add(pv.Panel)
     .data(results)
